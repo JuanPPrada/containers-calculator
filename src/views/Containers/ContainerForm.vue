@@ -7,12 +7,7 @@
       <div class="text-h6 q-mb-md">{{ title }}</div>
 
       <q-form class="q-gutter-md" @submit.prevent="onSubmit">
-        <q-input
-          v-model.trim="form.name"
-          label="Nombre"
-          :disable="store.loading"
-          required
-        />
+        <q-input v-model.trim="form.name" label="Nombre" :disable="store.loading" required />
         <q-input
           v-model.number="form.length"
           type="number"
@@ -51,18 +46,8 @@
         />
 
         <div class="row q-gutter-sm">
-          <q-btn
-            color="primary"
-            label="Guardar"
-            type="submit"
-            :loading="store.loading"
-          />
-          <q-btn
-            flat
-            label="Cancelar"
-            :disable="store.loading"
-            @click="onCancel"
-          />
+          <q-btn color="primary" label="Guardar" type="submit" :loading="store.loading" />
+          <q-btn flat label="Cancelar" :disable="store.loading" @click="onCancel" />
         </div>
       </q-form>
 
@@ -96,9 +81,7 @@ const form = ref<ContainerPayload>({
 });
 
 const isEdit = computed(() => Boolean(route.params.id));
-const title = computed(() =>
-  isEdit.value ? 'Editar contenedor' : 'Crear contenedor',
-);
+const title = computed(() => (isEdit.value ? 'Editar contenedor' : 'Crear contenedor'));
 
 function notifyError(err: unknown) {
   const message = err instanceof Error ? err.message : 'Error inesperado';
@@ -155,8 +138,8 @@ async function onSubmit() {
   }
 }
 
-function onCancel() {
-  router.push('/containers');
+async function onCancel() {
+  await router.push('/containers');
 }
 
 onMounted(async () => {

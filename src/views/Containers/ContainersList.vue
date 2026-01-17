@@ -73,16 +73,18 @@ function notifyError(err: unknown) {
 function confirmRemove(row: Container) {
   $q.dialog({
     title: 'Confirmar',
-    message: `Eliminar "${row.name}"?`,
+    message: '¿Eliminar contenedor?',
     cancel: true,
     persistent: true,
-  }).onOk(async () => {
-    try {
-      await store.remove(row.id);
-      $q.notify({ type: 'positive', message: 'Contenedor eliminado' });
-    } catch (err) {
-      notifyError(err);
-    }
+  }).onOk(() => {
+    void (async () => {
+      try {
+        await store.remove(row.id);
+        $q.notify({ type: 'positive', message: 'Contenedor eliminado' });
+      } catch (err) {
+        notifyError(err);
+      }
+    })();
   });
 }
 

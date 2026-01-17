@@ -71,13 +71,15 @@ function confirmRemove(row: Transformer) {
     message: `Eliminar "${row.name}"?`,
     cancel: true,
     persistent: true,
-  }).onOk(async () => {
-    try {
-      await store.remove(row.id);
-      $q.notify({ type: 'positive', message: 'Transformador eliminado' });
-    } catch (err) {
-      notifyError(err);
-    }
+  }).onOk(() => {
+    void (async () => {
+      try {
+        await store.remove(row.id);
+        $q.notify({ type: 'positive', message: 'Transformador eliminado' });
+      } catch (err) {
+        notifyError(err);
+      }
+    })();
   });
 }
 
